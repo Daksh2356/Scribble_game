@@ -49,9 +49,9 @@ public class Scribble extends Applet
 		return true;
 	}
 	
-	public boolean action ( Event e, Object obj )      
+	public boolean action ( Event e, Object obj )    // if any event is encountered then this function is called
 	{
-		if(e.target == clear )
+		if(e.target == clear )                   // if "Clear" button is pressed
 		{
 			Graphics g = this.getGraphics();
 			Rectangle r = this.bounds();
@@ -60,8 +60,8 @@ public class Scribble extends Applet
 			return true;
 		}
 			
-		else if( e.target == color_choices)  {
-			if(obj.equals("red"))	       curr_color=Color.red;
+		else if( e.target == color_choices)  {  // if any color from Choice is selected
+			if(obj.equals("red"))	       curr_color=Color.red; 
 			else if(obj.equals("yellow"))  curr_color=Color.yellow;
 			else if(obj.equals("blue"))    curr_color=Color.blue;
 			else if(obj.equals("green"))   curr_color=Color.green;
