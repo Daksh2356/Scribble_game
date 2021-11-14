@@ -10,15 +10,15 @@ public class Scribble extends Applet
 	
 	public void init()
 	{
-		this.setBackground(Color.white);
+		this.setBackground(Color.white);     
 		clear=new Button("Clear");
 		clear.setBackground(Color.lightGray);
 		// add background & foreground color to button
 		clear.setForeground(Color.black);
 		this.add(clear);
 		
-		color_choices = new Choice();
-		color_choices.addItem("black");
+		color_choices = new Choice();   //provide different color options to user
+		color_choices.addItem("black");       // we add different colors to color_choices
 		color_choices.addItem("red");
 		color_choices.addItem("yellow");
 		color_choices.addItem("blue");
@@ -49,7 +49,7 @@ public class Scribble extends Applet
 		return true;
 	}
 	
-	public boolean action ( Event e, Object obj )
+	public boolean action ( Event e, Object obj )      
 	{
 		if(e.target == clear )
 		{
