@@ -1,81 +1,125 @@
-import java.applet.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
-public class Scribble extends Applet  
-{
-	private int last_x,last_y;
-	private  Button clear;
-	private  Choice color_choices;
-	private  Color curr_color=Color.black;
-	
-	public void init()
-	{
-		this.setBackground(Color.white);     
-		clear=new Button("Clear");
-		clear.setBackground(Color.lightGray);
-		// add background & foreground color to button
+// imported necessary packages and libraries
+
+public class Scribble extends JFrame {
+	static int last_x, last_y; // coordinates of pointer
+	static JButton clear; // button
+	static JComboBox clr; // list of choices
+
+	static Color curr_color = Color.black; // current color
+
+	Scribble() {
+		last_x = last_y = 0;
+	}
+
+	public static void main(String args[]) {
+
+		JFrame f = new JFrame("Scribble Game");
+		clear = new JButton("Clear");
+		clear.setBackground(Color.lightGray); // add background & foreground color to button
 		clear.setForeground(Color.black);
-		this.add(clear);
-		
-		color_choices = new Choice();   //provide different color options to user
-		color_choices.addItem("black");       // we add different colors to color_choices
-		color_choices.addItem("red");
-		color_choices.addItem("yellow");
-		color_choices.addItem("blue");
-		color_choices.addItem("green");
-		color_choices.addItem("magenta");
-		color_choices.addItem("orange");
-		color_choices.addItem("pink");
-		color_choices.setForeground(Color.black);
-		color_choices.setBackground(Color.lightGray);
-		this.add(new Label("Color: "));
-		this.add(color_choices);
-		
-	}
-	
-	public boolean mouseDown(Event e, int x, int y)
-	{
-		last_x= x; last_y=y;
-		return true;
-	}
-	
-	public boolean mouseDrag(Event e, int x, int y)
-	{
-		Graphics g = this.getGraphics();
-		g.setColor(curr_color);
-		g.drawLine(last_x,last_y, x, y);
-		last_x=x; 
-		last_y=y;
-		return true;
-	}
-	
-	public boolean action ( Event e, Object obj )    // if any event is encountered then this function is called
-	{
-		if(e.target == clear )                   // if "Clear" button is pressed
-		{
-			Graphics g = this.getGraphics();
-			Rectangle r = this.bounds();
-			g.setColor(this.getBackground());
-			g.fillRect(r.x, r.y, r.width, r.height);
-			return true;
-		}
-			
-		else if( e.target == color_choices)  {  // if any color from Choice is selected
-			if(obj.equals("red"))	       curr_color=Color.red; 
-			else if(obj.equals("yellow"))  curr_color=Color.yellow;
-			else if(obj.equals("blue"))    curr_color=Color.blue;
-			else if(obj.equals("green"))   curr_color=Color.green;
-			else if(obj.equals("magenta")) curr_color=Color.magenta;
-			else if(obj.equals("orange"))  curr_color=Color.orange;
-			else if(obj.equals("pink"))   curr_color=Color.pink;
-			else curr_color=Color.black;
-			return true;
-		}
-		else return super.action(e,obj);
-	}
-}
 
-/*
-<applet code= "Scribble.class" height="500" width="500">
-</applet>1
-*/
+		// provide different color options to user
+
+		String colors[] = { "blue", "red", "yellow", "green", "magenta", "pink", "orange" };
+
+		// added different colors to clr
+
+		clr = new JComboBox<>(colors);
+
+		f.setSize(1000, 500); // setting up frame paramters
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setVisible(true);
+		f.setLayout(new FlowLayout());
+		f.add(new Label("Color: ")); // adding all components to the frame container
+		// f.add(color_choices);
+		f.add(clr);
+		f.add(clear);
+
+		f.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {             // function called when mouse is clicked
+				Graphics g = f.getGraphics();
+				g.setColor(curr_color);
+				g.drawLine(last_x, last_y, e.getX(), e.getY());
+				last_x = e.getX();
+				last_y = e.getY();
+
+			}
+
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {             // function called when mouse is pressed
+				last_x = e.getX();
+				last_y = e.getY();
+
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {
+
+			}
+
+		});
+
+		clear.addActionListener(new ActionListener() {         // if "clear" is pressed then this function is called
+			public void actionPerformed(ActionEvent e) {
+				Graphics g = f.getGraphics();
+				Rectangle r = f.getBounds();
+				g.setColor(f.getBackground());
+				g.fillRect(r.x, r.y, r.width, r.height);
+			}
+		});
+
+		clr.addItemListener(new ItemListener() {                  // if any color from clr is selected then this is called
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					Object item = event.getItem();
+					if (item.equals("red"))
+						curr_color = Color.red;
+					else if (item.equals("yellow"))
+						curr_color = Color.yellow;
+					else if (item.equals("blue"))
+						curr_color = Color.blue;
+					else if (item.equals("green"))
+						curr_color = Color.green;
+					else if (item.equals("magenta"))
+						curr_color = Color.magenta;
+					else if (item.equals("orange"))
+						curr_color = Color.orange;
+					else if (item.equals("pink"))
+						curr_color = Color.pink;
+					else
+						curr_color = Color.black;
+
+				}
+			}
+
+		});
+
+	}
+	// else return super.action(e,obj);
+}
