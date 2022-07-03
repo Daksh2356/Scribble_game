@@ -37,18 +37,18 @@ public class Scribble extends JFrame {
 
 		// provide different color options to user
 
-		String colors[] = { "blue", "red", "yellow", "green", "magenta", "pink", "orange" };
+		String colors[] = { "blue", "red", "yellow", "green", "magenta", "pink", "orange" ,"black" };
 
 		// added different colors to clr
 
 		clr = new JComboBox<>(colors);
+		clr.updateUI();
 
 		f.setSize(1000, 500); // setting up frame paramters
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 		f.setLayout(new FlowLayout());
 		f.add(new Label("Color: ")); // adding all components to the frame container
-		// f.add(color_choices);
 		f.add(clr);
 		f.add(clear);
 
@@ -129,14 +129,12 @@ public class Scribble extends JFrame {
 						curr_color = Color.orange;
 					else if (item.equals("pink"))
 						curr_color = Color.pink;
-					else
+					else if (item.equals("black"))
 						curr_color = Color.black;
 
 				}
+				else f.setVisible(true);
 			}
-
 		});
-
 	}
-	// else return super.action(e,obj);
 }
