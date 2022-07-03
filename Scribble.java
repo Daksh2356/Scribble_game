@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -52,7 +55,38 @@ public class Scribble extends JFrame {
 		f.addMouseListener(new MouseListener() {
 
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {             // function called when mouse is clicked
+			public void mousePressed(MouseEvent e) {             // function called when mouse is pressed
+				last_x = e.getX();
+				last_y = e.getY();
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+
+		});
+
+		f.addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(java.awt.event.MouseEvent e) {             // function called when mouse is pressed and dragged
 				Graphics g = f.getGraphics();
 				g.setColor(curr_color);
 				g.drawLine(last_x, last_y, e.getX(), e.getY());
@@ -62,25 +96,8 @@ public class Scribble extends JFrame {
 			}
 
 			@Override
-			public void mousePressed(java.awt.event.MouseEvent e) {             // function called when mouse is pressed
-				last_x = e.getX();
-				last_y = e.getY();
-
-			}
-
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {
-
+			public void mouseMoved(MouseEvent e) {
+				
 			}
 
 		});
